@@ -1,0 +1,16 @@
+
+
+
+
+form{
+  display: flex; flex-direction: row; justify-content: space-evenly; text-align: center; align-items: center; padding: 10px;
+}
+
+.font{
+  font-family: 'Oswald', sans-serif; font-weight: 300;
+}
+
+input{
+  font-size: 2em; border-radius: 5px; width: 100%;
+}
+

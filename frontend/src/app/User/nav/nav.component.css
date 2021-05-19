@@ -1,0 +1,21 @@
+.font{
+  font-family: 'Oswald', sans-serif; font-weight: 300; font-size: 2em;
+}
+
+#links{
+  display: flex; flex-direction: row; column-gap: 10px; justify-content: flex-start; flex: 1; align-items: center;
+}
+
+#logout{
+  display: flex; justify-content: flex-end; flex: 1; align-items: center;
+}
+
+@media only screen and (max-width: 600px) {
+#links{
+  display: none;
+}
+
+#logout{
+  display: none;
+}
+}

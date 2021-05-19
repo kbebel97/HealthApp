@@ -1,0 +1,61 @@
+input{
+  border-radius: 5px; width: 100%; font-size: xx-large; flex: 2;
+}
+
+.form-label-container{
+  width: 200px; font-size: xx-large; margin: 0; display: flex; align-items: center;
+}
+
+.font{
+  font-family: 'Oswald', sans-serif; font-weight: 300;
+}
+
+form{
+  display: flex; flex-direction: column; justify-content: space-evenly; border: black 3px solid; border-radius: 5px; width: 60%;
+}
+
+#selectCountry:hover{
+  background-color:	rgb(211,211,211);
+}
+
+#selectMaritalStatus:hover{
+  background-color:	rgb(211,211,211);
+}
+
+.form-row{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  margin: 0px;
+  padding: 7px;
+}
+
+.form-row input{
+  flex: 1;
+}
+
+#form-container{
+  display: flex; justify-content: center; align-items: flex-start; padding: 2rem;
+}
+
+@media only screen and (max-width: 860px) {
+  .form-row{
+    flex-direction: column;
+    width: 100%;
+    row-gap: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  form{
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+  }
+  #form-container{
+    padding: 0;
+  }
+
+}

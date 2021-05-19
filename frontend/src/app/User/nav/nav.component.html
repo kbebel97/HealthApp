@@ -1,0 +1,19 @@
+<head>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<div style="display: flex; flex-direction: row; height: 80px; border-bottom: 3px solid black;" >
+  <div style="width: fit-content; display: flex; justify-content: flex-start; align-items: center; column-gap: 2%; padding: 10px;">
+    <span class="material-icons" style="font-size: 50px;">local_hospital</span>
+    <div style="font-family: 'Bebas Neue', cursive; font-size: 40px; display: flex; align-items: center;">
+      <div>MyHealth</div>
+    </div>
+  </div>
+  <nav id="links" class="navbar-nav">
+    <a type="button" routerLink="/user_nav/profile" class="font nav-link router-link" style="width: 122px; text-align: center; font-size: x-large;">Profile</a>
+    <a type="button"  routerLink="/user_nav/dependents" class="font nav-link router-link"  style=" width: 122px; font-size:x-large; text-align: center;">Dependents</a>
+  </nav>
+  <div id="logout">
+    <a class="font" style="width: 122px; text-align: center; font-size: x-large;">Logout</a>
+  </div>
+</div>
+<router-outlet></router-outlet>
