@@ -1,0 +1,141 @@
+input{
+  border: 1px solid black; width: 100%; font-size: xx-large; flex: 2;
+}
+
+.form-label-container{
+  width: 200px; font-size: xx-large; margin: 0; display: flex; align-items: center;
+}
+
+.font{
+  font-family: 'Oswald', sans-serif; font-weight: 300;
+}
+
+form{
+  display: flex; flex-direction: column; justify-content: space-evenly; border: black 2px solid; width: 60%;
+  box-shadow: 10px 10px 5px grey;
+  background-color: white;
+}
+
+.form-row{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  margin: 0px;
+  padding: 10px;
+}
+
+.form-row input{
+  flex: 1;
+}
+
+#dependent-container{
+  height: calc(100% - 80px); display: flex; flex-direction: column;
+}
+
+.desktopUpdateButtonHover:hover{
+  background-image: none !important;
+  color: black !important;
+  background-color: white;
+}
+/* [ngStyle]="dependent.approvalPending.pending ? {'background-image' : 'linear-gradient(to bottom right, grey, white)', 'color' : 'white'} : {}" */
+
+/* desktop perspective */
+
+#viewDesktop{
+  display: flex; flex-direction: column; height: 100%; width: 100%;
+}
+
+#addDependentDesktop{
+  display: flex; justify-content: center; align-items: center; position: absolute; z-index:1; width: 100%; margin: auto; height: calc(100% - 80px);
+}
+
+#updateDependentDesktop{
+  display: flex; justify-content: center; align-items: center; position: absolute; z-index:1; width: 100%; margin: auto; height: calc(100% - 80px);
+}
+
+#updateDependentDesktopButton{
+  padding-top: 2rem; padding-bottom: 2rem; border-bottom: 1px solid black; font-size: 2rem;
+}
+
+#updateDependentDesktopButton:hover{
+  /* background-color: white; */
+}
+
+/* mobile perspective */
+
+#viewMobile{
+  display: none; flex-direction: column;
+}
+
+#addDependentMobile{
+  display: none; box-shadow: none; background-color: transparent;
+}
+
+#updateDependentMobile{
+  display: none; box-shadow: none; background-color: transparent;
+}
+
+#updateDependentMobileButton{
+  border-bottom: 1px solid black; font-size: 2rem;
+}
+
+#updateDependentMobileButton:hover{
+  background-color: white;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active
+{
+ -webkit-box-shadow: 0 0 0 30px white inset !important;
+}
+
+@media only screen and (max-width: 1050px) {
+
+  #viewMobile{
+    display: flex;
+    width: 100%;
+  }
+
+  #viewDesktop{
+    display: none;
+  }
+
+  #addDependentDesktop{
+    display: none;
+  }
+
+  #addDependentMobile{
+    display: block;
+  }
+
+  #updateDependentMobile{
+    row-gap: 5px; display: flex; flex-direction: column; height: 100%;
+  }
+
+  #updateDependentDesktop{
+    display: none;
+  }
+
+  .form-row{
+    flex-direction: column;
+    width: 100%;
+    row-gap: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  form{
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+  }
+  #form-container{
+    padding: 0;
+  }
+
+
+}

@@ -1,0 +1,53 @@
+<head>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<div id="form-container">
+  <form [formGroup]="addFamilyRef" (ngSubmit)="pushtoAddMembersList()" style="row-gap: 5px;" >
+    <h1 class="title request-plan-change-title" >Add Family Member</h1>
+    <div *ngIf="error_text" class="family-form-row font" style="justify-content: center; align-items: center; color: #d9534f;; padding: 10px;">
+      <div style="font-size: x-large; text-align: center;">{{error_text}}</div>
+    </div>
+    <div *ngIf="message_text" class="family-form-row font" style="justify-content: center; align-items: center; color: #5cb85c; padding: 10px;">
+      <div style="font-size: x-large; text-align: center;">{{message_text}}</div>
+    </div>
+    <div class="add-family-row" style="padding: 10px 10px 0px 10px;">
+      <input style="flex: 2; border: 1px solid;" type="email" formControlName="email" placeholder="Email"/>
+    </div>
+    <div class="add-family-row" style="padding: 0px 10px 0px 10px;">
+      <input style="flex: 2; border: 1px solid;" type="text" formControlName="firstName" placeholder="First Name"/>
+    </div>
+    <div class="add-family-row" style="padding: 0px 10px 0px 10px;">
+      <input style="flex: 2; border: 1px solid;" type="text" formControlName="lastName" placeholder="Last Name"/>
+    </div>
+    <div class="add-family-row" style="padding: 0px 10px 0px 10px;" [ngStyle]="{'height': dateValidation ? 'auto' : 'fit-content'}">
+      <div style="flex: 2; display: flex; flex-direction: column; row-gap: 8px; width: 100%;">
+        <div *ngIf="!dateValidation" style="font-size: large; text-align: start; color: #d9534f;">Invalid Date or Format!</div>
+        <input type="text" formControlName="dob" placeholder="DOB - MM/DD/YYYY" (input)="validateDate($event)" style="height: 100%; border: 1px solid;"/>
+      </div>
+    </div>
+    <div class="add-family-row" style="padding: 0px 10px 0px 10px;">
+      <div style="flex: 2; min-height: 51px; height: 51px;">
+        <div #divRelationship class="relationship font btn" style="height: 100%; border: 1px solid black; padding: 0; text-align: start; display: flex; justify-content: space-between; background-color: white;" [ngStyle]="{'color': relationship=='Relationship' ? 'grey' : 'black'}" type="text">
+          <div class="relationship" style="font-size: xx-large; padding-left: 2px;">{{relationship}}</div>
+          <div class="relationship" style="display: flex; justify-content: center; align-items: center;"><span class="relationship material-icons">arrow_drop_down</span></div>
+        </div>
+        <div *ngIf="displayRelationships" #divRelationshipList style="position: absolute; background-color: white; height: fit-content; overflow-x:hidden; border: black 1px solid; display: flex; flex-direction: column;" >
+          <div (click)="relationship = relationship_" class="font btn" style="width: auto; font-size: xx-large; padding-bottom: 5px; text-align: start;" *ngFor="let relationship_ of relationships">{{relationship_}}</div>
+        </div>
+      </div>
+    </div>
+    <div class="add-family-row" style="padding: 0px 10px 0px 10px;">
+      <input style="flex: 2; border: 1px solid;"  type="text"  mask="(000) 000-0000" formControlName="phoneNumber" placeholder="Phone"/>
+    </div>
+    <div class="add-family-row" style="flex-grow: 1; padding: 10px; column-gap: 1%; display: flex; flex-direction: column; row-gap: 20px; justify-content: flex-end; justify-content: space-between;">
+      <div style="display: flex; flex-direction: column; row-gap: 5px;">
+        <div style="flex: 1; display: flex; align-items: center; justify-content: flex-end;"><input class="btn btn-outline-primary font"  type="submit" value="Add Family Member" style="font-size: xx-large; width: 100%;"/></div>
+      </div>
+      <div style="display: flex; flex-direction: column; row-gap: 5px;">
+        <div style="flex: 1; display: flex; align-items: center; justify-content: flex-end;"><input class="btn btn-outline-primary font"  type="submit" value="Submit Quote Request" style="font-size: xx-large; width: 100%;"/></div>
+        <div style="flex: 1; display: flex; align-items: center; justify-content: flex-end; "><input class="btn btn-outline-secondary font" type="reset" value="Clear" style="font-size: xx-large; width: 100%;"/></div>
+        <div style="flex: 1; display: flex; align-items: center; justify-content: flex-end; "><input class="btn btn-outline-primary font" type="button" value="Back" style="font-size: xx-large; width: 100%;" (click)="returntoSelectPlan()"/></div>
+      </div>
+    </div>
+  </form>
+</div>

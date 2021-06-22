@@ -1,0 +1,313 @@
+/* .form-label-container{
+  font-size: xx-large; margin: 0; display: flex; align-items: flex-start; align-items: center; min-width: 200px;
+} */
+
+.add-family-label{
+  display: block; align-items: flex-start; align-items: center; min-width: 30%; font-size: xx-large; margin: auto; margin-left: 0%;
+}
+.add-family-row{
+  display: flex; flex-direction: row; width: 100%; row-gap: 5px; padding-top: 10px; padding-bottom: 10px; margin: 0; font-family: 'Oswald', sans-serif; font-weight: 300;
+}
+#add-family-form{
+  row-gap: 5px;
+}
+
+.remove-family-row{
+  display: flex; flex-direction: row; width: 100%; row-gap: 5px; padding-top: 10px; padding-bottom: 10px; margin: 0; font-family: 'Oswald', sans-serif; font-weight: 300;
+}
+
+#remove-family-menu{
+  display: flex; flex-direction: column; justify-content: space-evenly; border: black 2px solid; width: 60%;
+  box-shadow: 10px 10px 5px grey;
+  background-color: white;
+  position: absolute; z-index:1; width: 100%; margin: auto; height: calc(100% - 80px);
+}
+
+.form-row{display: flex; flex-direction: row; width: 100%; row-gap: 5px; padding-top: 10px; padding-bottom: 10px; margin: 0; font-family: 'Oswald', sans-serif; font-weight: 300;}
+
+.add-remove-row{ padding: 10px 10px 0px 10px; display: flex; flex-direction: row; width: 100%; row-gap: 5px; column-gap: 1%; font-family: 'Oswald', sans-serif; font-weight: 300;}
+.update-cancel-row{padding: 0px 10px 10px 10px; display: flex; flex-direction: column; width: 100%; row-gap: 5px; column-gap: 1%; font-family: 'Oswald', sans-serif; font-weight: 300;}
+.remove-member-row{padding: 10px 10px 0px 10px; display: flex; flex-direction: row; width: 100%; row-gap: 5px; column-gap: 1%; font-family: 'Oswald', sans-serif; font-weight: 300;}
+
+.font{
+  font-family: 'Oswald', sans-serif; font-weight: 300;
+}
+
+/* checkbox */
+::ng-deep .mat-checkbox .mat-checkbox-label {
+  font-family: 'Oswald', sans-serif; font-weight: 300; font-size: x-large; font-style: normal;
+}
+
+/* General Styles */
+input{
+  font-size: xx-large;
+}
+
+.plan-change-button-container{
+  padding: 10px; flex-grow: 1; display: flex; justify-content: center; align-items: flex-end; width: 100%;
+}
+
+#update-plan-button-container{
+  padding: 10px; flex-grow: 1; display: flex; justify-content: center; align-items: flex-end; width: 100%;
+}
+
+#plan-container{
+  height: calc(100% - 80px);
+  font-family: 'Oswald', sans-serif;
+  font-weight: 300;
+}
+
+.info{
+  margin: 10px; display: flex; flex-direction: column; row-gap: 1rem;
+}
+
+.title-container{
+  display: flex; flex-direction: column; height: fit-content;
+}
+
+/* Desktop Styles */
+
+#desktop-container{
+  display: flex; flex-direction: column; height: 100%;
+}
+#plan-menu-desktop {
+  display: flex; justify-content: center; align-items: center; position: absolute; z-index:1; width: 100%; margin: auto; height: calc(100% - 80px);
+}
+
+#add-family-menu-desktop {
+  display: flex; justify-content: center; align-items: center; position: fixed; z-index:1; width: 100%; margin: auto; height: calc(100% - 80px);
+}
+#remove-family-menu-desktop {
+  display: flex; justify-content: center; align-items: center; position: fixed; z-index:1; width: 100%; margin: auto; height: calc(100% - 80px);
+}
+
+/* .menu{
+  display: flex; justify-content: center; align-items: center; position: absolute; z-index:1; width: 100%; margin: auto; height: calc(100% - 80px);
+} */
+
+.menu{
+  display: flex; justify-content: center; align-items: center; width: 100%; margin: auto; height: 100%;
+}
+
+#remove-member-form{
+  display: flex; justify-content: center; align-items: center; position: absolute; z-index:1; width: 100%; margin: auto; height: calc(100% - 80px);
+}
+
+#remove-member-form form{
+  display: flex; flex-direction: column; width: 700px; height: fit-content; border: 2px solid; background-color: white; box-shadow: 10px 10px 5px grey;
+}
+
+#edit-member-form{
+  display: flex; justify-content: center; align-items: center; position: absolute; z-index:1; width: 100%; margin: auto; height: calc(100% - 80px);
+}
+
+#edit-member-form form{
+  display: flex; flex-direction: column; width: 700px; height: fit-content; border: 2px solid; background-color: white; box-shadow: 10px 10px 5px grey;
+}
+
+#add-family-form{
+  display: flex; justify-content: center; align-items: center; position: absolute; z-index:1; width: 100%; margin: auto; height: calc(100% - 80px);
+}
+
+#add-family-form form{
+  width: 700px; height: fit-content; border: 2px solid; background-color: white; box-shadow: 10px 10px 5px grey;
+}
+
+form{
+  display: flex; flex-direction: column; width: 100%; height: 100%;
+}
+
+#mobile{
+  display: none;
+}
+
+#plan-menu input{
+  border: 1px solid black; width: 100%; font-size: xx-large; flex: 2;
+}
+
+
+
+#add-family-menu-desktop input{
+  border-radius: 5px; border: 1px solid black; width: 100%; font-size: xx-large; flex: 2;
+}
+
+/* Mobile Styles */
+#mobile-container{
+  display: none;
+}
+#plan-menu-mobile {
+  display: none;
+}
+#add-family-menu-mobile {
+  display: none;
+}
+#remove-family-menu-mobile {
+  display: none;
+}
+
+
+#plan-menu-mobile input{
+  border-radius: 5px; border: 1px solid black; width: 100%; font-size: xx-large; flex: 2;
+}
+
+#add-family-menu-mobile input{
+  border-radius: 5px; border: 1px solid black; width: 100%; font-size: xx-large; flex: 2;
+}
+
+::-webkit-scrollbar {
+  width: 0px;
+}
+
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+
+::-webkit-scrollbar-thumb {
+background-color: darkgrey;
+outline: 1px solid slategrey;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active
+{
+ -webkit-box-shadow: 0 0 0 30px white inset !important;
+}
+
+.remove-member-hover:hover{
+  background-color: #d9534f; color: white;
+}
+.add-member-hover:hover{
+  background-color: #5cb85c; color: white;
+}
+
+@media only screen and (max-width: 1050px) {
+
+  #update-plan-button{
+    width: 100%;
+  }
+
+  #desktop{
+    display:  none;
+  }
+
+  #mobile{
+    display: flex;
+  }
+
+  #remove-member-form form{
+    height: 100%;
+    width: 100%;
+    border: 0;
+    background-color: transparent;
+    box-shadow: none;
+    border: none;
+    background-color: transparent;
+  }
+
+
+
+  #add-family-form form{
+    height: 100%;
+    width: 100%;
+    border: 0;
+    background-color: transparent;
+    box-shadow: none;
+    border: none;
+    background-color: transparent;
+  }
+
+
+  #edit-member-form form{
+    height: 100%;
+    width: 100%;
+    border: 0;
+    background-color: transparent;
+    box-shadow: none;
+    border: none;
+    background-color: transparent;
+  }
+
+  #mobile-plan-menu{
+    display: none;
+  }
+
+  #edit-member form{
+    width: 100%;
+    height: 100%;
+    border: none;
+    box-shadow: none;
+    background-color: transparent;
+  }
+
+  .add-family-row{
+    flex-direction: column;
+    row-gap: 1rem;
+  }
+  #add-family-form{
+    row-gap: 1rem;
+  }
+
+  .menu{
+    width: 100%;
+  }
+
+  #add-family-menu{
+    width: 100%;
+  }
+
+  #plan-menu{
+    width: 100%;
+  }
+
+
+  .add-remove-row{
+    flex-direction: column;
+  }
+
+  /* #desktop-container{
+    display: none
+  } */
+
+  #plan-change-menu-desktop {
+    display: none;
+  }
+
+  #add-family-menu-desktop {
+    display: none;
+  }
+
+  /* #remove-family-menu-desktop{
+    display: none;
+  } */
+
+  #mobile-container{
+    display: flex; flex-direction: column; height: 100%;
+  }
+
+  form{
+    height: 100%;
+    width: 100%;
+    border: 0;
+    background-color: transparent;
+    box-shadow: none;
+  }
+
+  #plan-menu-mobile{
+    display: flex; width: 100%; height: 100%; flex-direction: column;
+  }
+
+  #add-family-menu-mobile{
+    display: flex; width: 100%; height: 100%; flex-direction: column; background-color: white;
+  }
+
+  /* #remove-family-menu-mobile{
+    display: flex; width: 100%; height: 100%; flex-direction: column; background-color: white;
+  } */
+
+  .mobile-button-container{
+    width: 100%; display: flex; flex-direction: column; row-gap: 5px; padding: 7px;
+  }
+
+}

@@ -1,0 +1,24 @@
+<head>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<div id="form-container">
+  <form [formGroup]="accountRef" (ngSubmit)="createAccount()">
+    <div style="display: flex; flex-direction: column; row-gap: 10px;">
+      <h1>Create Account</h1>
+      <div *ngIf="error" style="color: red; font-size: x-large; vertical-align: middle; padding: 10px; position: absolute; top: 72px;">{{error_text}}</div>
+      <div class="form-row" >
+        <input type="text" formControlName="Email" placeholder="Email"/>
+      </div>
+      <div class="form-row" >
+        <input type="text" formControlName="Password" placeholder="Password"/>
+      </div>
+      <div class="form-row">
+        <input type="text" formControlName="ConfirmPassword" placeholder="Confirm Password" style="height: 100%;"/>
+      </div>
+    </div>
+    <div id="button-container">
+      <input class="btn btn-outline-secondary" style="font-size: xx-large;" type="reset" value="Clear" (click)="clearForm()"/>
+      <input class="btn btn-outline-primary" style="font-size: xx-large;" type="submit" value="Next"/>
+    </div>
+  </form>
+</div>

@@ -1,13 +1,5 @@
 input{
-  border: 1px solid; width: 100%; font-size: xx-large; flex: 2;
-}
-
-.form-label-container{
-  width: 200px; font-size: xx-large; margin: 0; display: flex; align-items: center;
-}
-
-.font{
-  font-family: 'Oswald', sans-serif; font-weight: 300;
+  border: 1px solid; width: 100%; font-size: xx-large;
 }
 
 h1{
@@ -21,7 +13,6 @@ h2{
 form{
   display: flex; flex-direction: column; border: black 2px solid; width: 700px; box-shadow: 10px 10px 5px grey; background-color: white; row-gap: 10px; margin: auto;
 }
-
 
 *:not(span){
   font-family: 'Oswald', sans-serif; font-weight: 300;
@@ -43,12 +34,8 @@ form{
   padding: 0px 10px 0px 10px;
 }
 
-.form-row input{
-  flex: 1;
-}
-
 #form-container{
-  display: flex; justify-content: center; align-items: center; padding: 2rem; height: 100%;
+  display: flex; justify-content: center; align-items: center; height: 100%;
 }
 
 #button-container{
@@ -66,29 +53,23 @@ input:-webkit-autofill:active
 @media only screen and (max-width: 1050px) {
   .form-row{
     flex-direction: column;
-    width: 100%;
     row-gap: 10px;
   }
+
+  #button-container{
+    flex-direction: column-reverse;
+  }
+
   form{
+    height: 100%;
     width: 100%;
     max-width: 100%;
-    margin: auto;
     padding: 0;
     border: 0;
     border-radius: 0;
     background-color: transparent;
     background-attachment: fixed;
     box-shadow: none;
-  }
-  #form-container{
-    padding: 0;
-    justify-content: flex-start;
-  }
-  #button-container{
-    flex-direction: column;
-  }
-  #plan-menu{
-    height: 100%;
   }
 
 }

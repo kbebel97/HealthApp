@@ -1,0 +1,402 @@
+<head>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <style>
+    h1, h2, h3, h4{font-family: 'Oswald', sans-serif; font-weight: 300;}
+    .title{font-size: 4rem;}
+    .attribute{display: flex; flex-direction: column; row-gap: 10px}
+    h1{margin: 16px 0px 16px 0px; font-weight: 300; text-align: start; justify-content: flex-start; padding: 10px; font-size: 4rem;}
+    h2{font-size: xx-large; margin: 0;}
+    h3{font-size: x-large; margin: 0;}
+    h4{font-size: large; margin: 0;}
+
+    .request-plan-button{font-size: xx-large; font-family: 'Oswald', sans-serif; font-weight: 300; width: 100%;}
+
+    #checkbox-container{display: flex; flex-direction: column; justify-content: space-evenly; width: 100%; row-gap: 5px; border: 1px solid; padding: 10px;}
+    .checkbox-row{flex: 1; display: flex; min-height: 38px;}
+    .cb{display: flex; align-items: center; flex: 1; display: flex; justify-content: flex-start;}
+
+    ul.tier-list-description {list-style-type: square;}
+
+    .dropdown-container{flex: 1; display: flex; justify-content: flex-start; flex-direction: column;}
+    .dropdown{height: 100%; width: 50px; border: 1px solid black; padding: 0; text-align: center; display: flex; background-color: white; font-family: 'Oswald', sans-serif; font-weight: 300;}
+    .dropdown-text{font-size: x-large; flex: 1; text-align: center;}
+    .dropdown-arrow{display: flex; justify-content: center; align-items: center; flex: 1; display: flex; justify-content: flex-end;}
+    .dropdown-tier-container{position: absolute; z-index: 2; background-color: white; height: fit-content; overflow-x: hidden; border: black 1px solid; display: flex; flex-direction: column;}
+    .dropdown-tier{font-size: xx-large; padding: 5px; text-align: center; font-family: 'Oswald', sans-serif; font-weight: 300;}
+  </style>
+</head>
+<div id="plan-container" (window:resize)="onResize($event)">
+  <!--Plan Change Menu-->
+  <!-- <div *ngIf="planChangeMenu && (!addFamilyMenu && !removeFamilyMenu)" class="menu" > -->
+  <div *ngIf="planChangeMenu" class="menu" >
+    <form id="desktop" (ngSubmit)="submitUpdatePlanRequest()" >
+      <h1>Update Plan</h1>
+      <h2 style="padding: 10px">Choose your coverage and pick a tier:</h2>
+      <h3 style="padding: 10px">
+        <ul class="tier-list-description">
+          <li>Tier 1 - Provides basic coverage. Physicians are chosen for you.</li>
+          <li>Tier 2 - Eligable to choose your physican. Certain pyhsicians are restricted.</li>
+          <li>Tier 3 - Eligable to choose any doctor within our network.</li>
+        </ul>
+      </h3>
+      <div style="padding: 0px 10px 0px 10px">
+        <div id="checkbox-container">
+          <div class="checkbox-row">
+            <div class="cb">
+              <mat-checkbox [checked]='accountCopy.plan.isMedical' (change)="accountCopy.plan.isMedical = !accountCopy.plan.isMedical">Medical</mat-checkbox>
+            </div>
+            <div class="dropdown-container" *ngIf="accountCopy.plan.isMedical">
+              <div #medical class="medical btn dropdown" [ngStyle]="{'color': !accountCopy.plan.isMedical ? 'grey' : 'black'}" type="text">
+                <div class="medical dropdown-text">{{accountCopy.plan.medicalTier}}</div>
+                <div class="medical dropdown-arrow"><span class="medical material-icons">arrow_drop_down</span></div>
+              </div>
+              <div>
+                <div *ngIf="displayMedicalTiers" class="dropdown-tier-container" #medicalTiers>
+                  <div (click)="medicalTierSelection(tier)" class="btn dropdown-tier" *ngFor="let tier of Tiers">{{tier}}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="checkbox-row">
+            <div class="cb">
+              <mat-checkbox [checked]='accountCopy.plan.isDental' (change)="accountCopy.plan.isDental = !accountCopy.plan.isDental">Dental</mat-checkbox>
+            </div>
+            <div class="dropdown-container" *ngIf="accountCopy.plan.isDental">
+              <div #dental class="dental btn dropdown" [ngStyle]="{'color': !accountCopy.plan.isDental ? 'grey' : 'black'}" type="text">
+                <div class="dental dropdown-text">{{accountCopy.plan.dentalTier}}</div>
+                <div class="dental dropdown-arrow"><span class="dental material-icons">arrow_drop_down</span></div>
+              </div>
+              <div>
+                <div *ngIf="displayDentalTiers" class="dropdown-tier-container" #dentalTiers>
+                  <div (click)="medicalTierSelection(tier)" class="btn dropdown-tier" *ngFor="let tier of Tiers">{{tier}}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="checkbox-row">
+            <div class="cb">
+              <mat-checkbox [checked]='accountCopy.plan.isVision' (change)="accountCopy.plan.isVision = !accountCopy.plan.isVision">Vision</mat-checkbox>
+            </div>
+            <div class="dropdown-container" *ngIf="accountCopy.plan.isVision">
+              <div #vision class="vision btn dropdown" [ngStyle]="{'color': !accountCopy.plan.isVision ? 'grey' : 'black'}" type="text">
+                <div class="vision dropdown-text">{{accountCopy.plan.visionTier}}</div>
+                <div class="vision dropdown-arrow"><span class="vision material-icons">arrow_drop_down</span></div>
+              </div>
+              <div>
+                <div *ngIf="displayVisionTiers" class="dropdown-tier-container" #visionTiers>
+                  <div (click)="medicalTierSelection(tier)" class="btn dropdown-tier" *ngFor="let tier of Tiers">{{tier}}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; row-gap: 5px;">
+        <div class="add-remove-row">
+          <div class="btn btn-outline-primary request-plan-button" (click)="addFamilyMenu = true">Add Family Member</div>
+          <div class="btn btn-outline-primary request-plan-button" (click)="removeFamilyMenu = true">Remove Family Member</div>
+        </div>
+        <div *ngIf="removeMembersArray.length>0 || addMembersArray.length> 0" style="display: flex; flex-direction: column; justify-content: flex-start; flex-grow: 1;">
+          <div style="display: flex; flex-direction: column; justify-content: flex-start;">
+            <div *ngIf="removeMembersArray.length>0" style="padding: 10px;">
+              <h2>Members to Remove</h2>
+              <div class="row remove-member-hover" (click)="removeFromRemoveMembersList(member)" style="margin: 0; font-size: large; padding: 10px 0px 10px 0px; font-size: x-large; margin: 0; cursor: pointer;" *ngFor="let member of removeMembersArray">
+                <div class="col" style="padding: 0; padding-left: 5px; text-align: start; display: flex; align-items: center; justify-content: flex-start;">
+                  <span class="material-icons">
+                    close
+                  </span>
+                </div>
+                <div class="col" style="display: flex; word-break: break-all; padding: 0; margin: 0; text-align: center; align-items: center; justify-content: center;">{{member.firstName}}</div>
+                <div class="col" style="display: flex; word-break: break-all; padding: 0; margin: 0; text-align: center; align-items: center; justify-content: center;">{{member.lastName}}</div>
+              </div>
+            </div>
+            <div *ngIf="addMembersArray.length>0" style="padding: 10px">
+              <h2>Members to Add</h2>
+              <div class="row add-member-hover" (click)="openEditMemberForm(member)" style="margin: 0; font-size: large; padding: 10px 0px 10px 0px; font-size: x-large; margin: 0; cursor: pointer;" *ngFor="let member of addMembersArray">
+                <div class="col" style="padding: 0; padding-left: 5px; text-align: start; display: flex; align-items: center; justify-content: flex-start;">
+                  <span class="material-icons">
+                    edit
+                  </span>
+                </div>
+                <div class="col" style="display: flex; word-break: break-all; padding: 0; margin: 0; text-align: center; align-items: center; justify-content: center;">{{member.firstName}}</div>
+                <div class="col" style="display: flex; word-break: break-all; padding: 0; margin: 0; text-align: center; align-items: center; justify-content: center;">{{member.lastName}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="update-cancel-row">
+          <div style="flex: 1;"><input class="btn btn-outline-success request-plan-button" style="border-radius: 0; width: 100%;" type="submit" value="Request Plan Update"/></div>
+          <div style="flex: 1;"><input class="btn btn-outline-danger request-plan-button" style="border-radius: 0; width: 100%;" type="button" value="Cancel" (click)="toggleUpdatePlanMenu()"/></div>
+        </div>
+      </div>
+    </form>
+
+    <form id="mobile" *ngIf="!editMemberForm && !addFamilyMenu && !removeFamilyMenu" (ngSubmit)="submitUpdatePlanRequest()" >
+      <h1>Update Plan</h1>
+      <h2 style="padding: 10px">Choose your coverage and pick a tier:</h2>
+      <h3 style="padding: 10px">
+        <ul class="tier-list-description">
+          <li>Tier 1 - Provides basic coverage. Physicians are chosen for you.</li>
+          <li>Tier 2 - Eligable to choose your physican. Certain pyhsicians are restricted.</li>
+          <li>Tier 3 - Eligable to choose any doctor within our network.</li>
+        </ul>
+      </h3>
+      <div style="padding: 0px 10px 0px 10px">
+        <div id="checkbox-container">
+          <div class="checkbox-row">
+            <div class="cb">
+              <mat-checkbox [checked]='accountCopy.plan.isMedical' (change)="accountCopy.plan.isMedical = !accountCopy.plan.isMedical">Medical</mat-checkbox>
+            </div>
+            <div class="dropdown-container" *ngIf="accountCopy.plan.isMedical">
+              <div #medicalMobile class="medical btn dropdown" [ngStyle]="{'color': !accountCopy.plan.isMedical ? 'grey' : 'black'}" type="text">
+                <div class="medical dropdown-text">{{accountCopy.plan.medicalTier}}</div>
+                <div class="medical dropdown-arrow"><span class="medical material-icons">arrow_drop_down</span></div>
+              </div>
+              <div>
+                <div *ngIf="displayMedicalTiers" class="dropdown-tier-container" #medicalTiersMobile>
+                  <div (click)="medicalTierSelection(tier)" class="btn dropdown-tier" *ngFor="let tier of Tiers">{{tier}}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="checkbox-row">
+            <div class="cb">
+              <mat-checkbox [checked]='accountCopy.plan.isDental' (change)="accountCopy.plan.isDental = !accountCopy.plan.isDental">Dental</mat-checkbox>
+            </div>
+            <div class="dropdown-container" *ngIf="accountCopy.plan.isDental">
+              <div #dentalMobile class="dental btn dropdown" [ngStyle]="{'color': !accountCopy.plan.isDental ? 'grey' : 'black'}" type="text">
+                <div class="dental dropdown-text">{{accountCopy.plan.dentalTier}}</div>
+                <div class="dental dropdown-arrow"><span class="dental material-icons">arrow_drop_down</span></div>
+              </div>
+              <div>
+                <div *ngIf="displayDentalTiers" class="dropdown-tier-container" #dentalTiersMobile>
+                  <div (click)="medicalTierSelection(tier)" class="btn dropdown-tier" *ngFor="let tier of Tiers">{{tier}}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="checkbox-row">
+            <div class="cb">
+              <mat-checkbox [checked]='accountCopy.plan.isVision' (change)="accountCopy.plan.isVision = !accountCopy.plan.isVision">Vision</mat-checkbox>
+            </div>
+            <div class="dropdown-container" *ngIf="accountCopy.plan.isVision">
+              <div #visionMobile class="vision btn dropdown" [ngStyle]="{'color': !accountCopy.plan.isVision ? 'grey' : 'black'}" type="text">
+                <div class="vision dropdown-text">{{accountCopy.plan.visionTier}}</div>
+                <div class="vision dropdown-arrow"><span class="vision material-icons">arrow_drop_down</span></div>
+              </div>
+              <div>
+                <div *ngIf="displayVisionTiers" class="dropdown-tier-container" #visionTiersMobile>
+                  <div (click)="medicalTierSelection(tier)" class="btn dropdown-tier" *ngFor="let tier of Tiers">{{tier}}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; row-gap: 5px;">
+        <div class="add-remove-row">
+          <div class="btn btn-outline-primary request-plan-button" (click)="toggleAddFamilyMenu()">Add Family Member</div>
+          <div class="btn btn-outline-primary request-plan-button" (click)="removeFamilyMenu = true">Remove Family Member</div>
+        </div>
+        <div *ngIf="removeMembersArray.length>0 || addMembersArray.length> 0" style="display: flex; flex-direction: column; justify-content: flex-start; flex-grow: 1;">
+          <div style="display: flex; flex-direction: column; justify-content: flex-start;">
+            <div *ngIf="removeMembersArray.length>0" style="padding: 10px;">
+              <h2>Members to Remove</h2>
+              <div class="row remove-member-hover" (click)="removeFromRemoveMembersList(member)" style="margin: 0; font-size: large; padding: 10px 0px 10px 0px; font-size: x-large; margin: 0; cursor: pointer;" *ngFor="let member of removeMembersArray">
+                <div class="col" style="padding: 0; padding-left: 5px; text-align: start; display: flex; align-items: center; justify-content: flex-start;">
+                  <span class="material-icons">
+                    close
+                  </span>
+                </div>
+                <div class="col" style="display: flex; word-break: break-all; padding: 0; margin: 0; text-align: center; align-items: center; justify-content: center;">{{member.firstName}}</div>
+                <div class="col" style="display: flex; word-break: break-all; padding: 0; margin: 0; text-align: center; align-items: center; justify-content: center;">{{member.lastName}}</div>
+              </div>
+            </div>
+            <div *ngIf="addMembersArray.length>0" style="padding: 10px">
+              <h2>Members to Add</h2>
+              <div class="row add-member-hover" (click)="openEditMemberForm(member)" style="margin: 0; font-size: large; padding: 10px 0px 10px 0px; font-size: x-large; margin: 0; cursor: pointer;" *ngFor="let member of addMembersArray">
+                <div class="col" style="padding: 0; padding-left: 5px; text-align: start; display: flex; align-items: center; justify-content: flex-start;">
+                  <span class="material-icons">
+                    edit
+                  </span>
+                </div>
+                <div class="col" style="display: flex; word-break: break-all; padding: 0; margin: 0; text-align: center; align-items: center; justify-content: center;">{{member.firstName}}</div>
+                <div class="col" style="display: flex; word-break: break-all; padding: 0; margin: 0; text-align: center; align-items: center; justify-content: center;">{{member.lastName}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="update-cancel-row">
+          <div style="flex: 1;"><input class="btn btn-outline-success request-plan-button" style="border-radius: 0; width: 100%;" type="submit" value="Request Plan Update"/></div>
+          <div style="flex: 1;"><input class="btn btn-outline-danger request-plan-button" style="border-radius: 0; width: 100%;" type="button" value="Cancel" (click)="toggleUpdatePlanMenu()"/></div>
+        </div>
+      </div>
+    </form>
+
+      <!--Edit Family Menu-->
+      <div id="edit-member-form" *ngIf="editMemberForm">
+        <form [formGroup]="editFamilyRef" (ngSubmit)="editFamilyMember()" style="row-gap: 5px;">
+          <h1 class="title request-plan-change-title" >Edit Family Member</h1>
+          <div *ngIf="error_text" class="family-form-row font" style="justify-content: center; align-items: center; color: #d9534f;; padding: 10px;">
+            <div style="font-size: x-large; text-align: center;">{{error_text}}</div>
+          </div>
+          <div *ngIf="message_text" class="family-form-row font" style="justify-content: center; align-items: center; color: #5cb85c; padding: 10px;">
+            <div style="font-size: x-large; text-align: center;">{{message_text}}</div>
+          </div>
+          <div class="add-family-row" style="padding: 10px 10px 0px 10px;">
+            <input style="flex: 2; border: 1px solid;" type="email" formControlName="email" placeholder="Email"/>
+          </div>
+          <div class="add-family-row" style="padding: 0px 10px 0px 10px;">
+            <input style="flex: 2; border: 1px solid;" type="text" formControlName="firstName" placeholder="First Name"/>
+          </div>
+          <div class="add-family-row" style="padding: 0px 10px 0px 10px;">
+            <input style="flex: 2; border: 1px solid;" type="text" formControlName="lastName" placeholder="Last Name"/>
+          </div>
+          <div class="add-family-row" style="padding: 0px 10px 0px 10px;" [ngStyle]="{'height': dateValidation ? 'auto' : 'fit-content'}">
+            <div style="flex: 2; display: flex; flex-direction: column; row-gap: 8px; width: 100%;">
+              <div *ngIf="!dateValidation" style="font-size: large; text-align: start; color: #d9534f;">Invalid Date or Format!</div>
+              <input type="text" formControlName="dob" placeholder="DOB - MM/DD/YYYY" (input)="validateDate($event)" style="height: 100%; border: 1px solid;"/>
+            </div>
+          </div>
+          <div class="add-family-row" style="padding: 0px 10px 0px 10px;">
+            <div style="flex: 2; height: 51px; min-height: 51px;">
+              <div #divRelationship class="relationship font btn" style="height: 100%; border: 1px solid black; padding: 0; text-align: start; display: flex; justify-content: space-between; background-color: white;" [ngStyle]="{'color': relationship=='Relationship' ? 'grey' : 'black'}" type="text">
+                <div class="relationship" style="font-size: xx-large; padding-left: 2px;">{{relationship}}</div>
+                <div class="relationship" style="display: flex; justify-content: center; align-items: center;"><span class="relationship material-icons">arrow_drop_down</span></div>
+              </div>
+              <div *ngIf="displayRelationships" #divRelationshipList style="position: absolute; background-color: white; height: fit-content; overflow-x:hidden; border: black 1px solid; display: flex; flex-direction: column;" >
+                <div (click)="relationship = relationship_" class="font btn" style="width: auto; font-size: xx-large; padding-bottom: 5px; text-align: start;" *ngFor="let relationship_ of relationships">{{relationship_}}</div>
+              </div>
+            </div>
+          </div>
+          <div class="add-family-row" style="padding: 0px 10px 0px 10px;">
+            <input style="flex: 2; border: 1px solid;"  type="text"  mask="(000) 000-0000" formControlName="phoneNumber" placeholder="Phone"/>
+          </div>
+          <div class="add-family-row" style="flex-grow: 1; padding: 10px; column-gap: 1%; display: flex; flex-direction: column; row-gap: 5px; justify-content: flex-end">
+            <div style="display: flex; flex-direction: column; row-gap: 5px;">
+              <div style="flex: 1; display: flex; align-items: center; justify-content: flex-end;"><input class="btn btn-outline-primary font"  type="submit" value="Update" style="font-size: xx-large; width: 100%;"/></div>
+              <div style="flex: 1; display: flex; align-items: center; justify-content: flex-end;"><input class="btn btn-outline-danger font"  type="submit" value="Remove" style="font-size: xx-large; width: 100%;" (click)="removeFromAddMembersList()"/></div>
+              <div style="flex: 1; display: flex; align-items: center; justify-content: flex-end; "><input class="btn btn-outline-danger font" type="button" value="Cancel" style="font-size: xx-large; width: 100%;" (click)="openEditMemberForm(null)"/></div>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <!--Add Family Menu-->
+      <div *ngIf="addFamilyMenu" class="menu" id="add-family-form" style="display: flex; justify-content: center; align-items: center;" >
+        <form [formGroup]="addFamilyRef" (ngSubmit)="pushtoAddMembersList()" style="row-gap: 5px;" >
+          <h1 class="title request-plan-change-title" >Add Family Member</h1>
+          <div *ngIf="error_text" class="family-form-row font" style="justify-content: center; align-items: center; color: #d9534f;; padding: 10px;">
+            <div style="font-size: x-large; text-align: center;">{{error_text}}</div>
+          </div>
+          <div *ngIf="message_text" class="family-form-row font" style="justify-content: center; align-items: center; color: #5cb85c; padding: 10px;">
+            <div style="font-size: x-large; text-align: center;">{{message_text}}</div>
+          </div>
+          <div class="add-family-row" style="padding: 10px 10px 0px 10px;">
+            <input style="flex: 2; border: 1px solid;" type="email" formControlName="email" placeholder="Email"/>
+          </div>
+          <div class="add-family-row" style="padding: 0px 10px 0px 10px;">
+            <input style="flex: 2; border: 1px solid;" type="text" formControlName="firstName" placeholder="First Name"/>
+          </div>
+          <div class="add-family-row" style="padding: 0px 10px 0px 10px;">
+            <input style="flex: 2; border: 1px solid;" type="text" formControlName="lastName" placeholder="Last Name"/>
+          </div>
+          <div class="add-family-row" style="padding: 0px 10px 0px 10px;" [ngStyle]="{'height': dateValidation ? 'auto' : 'fit-content'}">
+            <div style="flex: 2; display: flex; flex-direction: column; row-gap: 8px; width: 100%;">
+              <div *ngIf="!dateValidation" style="font-size: large; text-align: start; color: #d9534f;">Invalid Date or Format!</div>
+              <input type="text" formControlName="dob" placeholder="DOB - MM/DD/YYYY" (input)="validateDate($event)" style="height: 100%; border: 1px solid;"/>
+            </div>
+          </div>
+          <div class="add-family-row" style="padding: 0px 10px 0px 10px;">
+            <div style="flex: 2; min-height: 51px;">
+              <div #divRelationship class="relationship font btn" style="height: 100%; border: 1px solid black; padding: 0; text-align: start; display: flex; justify-content: space-between; background-color: white;" [ngStyle]="{'color': relationship=='Relationship' ? 'grey' : 'black'}" type="text">
+                <div class="relationship" style="font-size: xx-large; padding-left: 2px;">{{relationship}}</div>
+                <div class="relationship" style="display: flex; justify-content: center; align-items: center;"><span class="relationship material-icons">arrow_drop_down</span></div>
+              </div>
+              <div *ngIf="displayRelationships" #divRelationshipList style="position: absolute; background-color: white; height: fit-content; overflow-x:hidden; border: black 1px solid; display: flex; flex-direction: column;" >
+                <div (click)="relationship = relationship_" class="font btn" style="width: auto; font-size: xx-large; padding-bottom: 5px; text-align: start;" *ngFor="let relationship_ of relationships">{{relationship_}}</div>
+              </div>
+            </div>
+          </div>
+          <div class="add-family-row" style="padding: 0px 10px 0px 10px;">
+            <input style="flex: 2; border: 1px solid;"  type="text"  mask="(000) 000-0000" formControlName="phoneNumber" placeholder="Phone"/>
+          </div>
+          <div class="add-family-row" style="flex-grow: 1; padding: 10px; column-gap: 1%; display: flex; flex-direction: column; row-gap: 5px; justify-content: flex-end;">
+            <div style="display: flex; flex-direction: column; row-gap: 5px;">
+              <div style="flex: 1; display: flex; align-items: center; justify-content: flex-end;"><input class="btn btn-outline-primary font"  type="submit" value="Add" style="font-size: xx-large; width: 100%;"/></div>
+              <div style="flex: 1; display: flex; align-items: center; justify-content: flex-end; "><input class="btn btn-outline-primary font" type="button" value="Done" style="font-size: xx-large; width: 100%;" (click)="toggleAddFamilyMenu()"/></div>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <!-- Remove Member Menu -->
+      <div *ngIf="removeFamilyMenu" id="remove-member-form">
+        <form (ngSubmit)="addDependentFunc()">
+          <h1 style="line-height: 4rem;">Select Members</h1>
+          <div class="remove-family-row" style="padding: 0px 10px 10px 10px;">
+            <div style="flex: 2; height: 53px;">
+              <div #removeMember class="remove-member font btn" style="height: 100%; border: 1px solid black; padding: 0; text-align: start; display: flex; justify-content: space-between; background-color: white;">
+                <div class="remove-member" style="font-size: xx-large; padding-left: 2px; text-align: center; margin: auto;">Family Members</div>
+                <div class="remove-member" style="display: flex; justify-content: center; align-items: center;"><span class="remove-member material-icons">arrow_drop_down</span></div>
+              </div>
+              <div *ngIf="displayRemoveMemberList" #removeMemberList style="position: absolute; z-index: 2; background-color: white; overflow-x: hidden; border: black 1px solid; display: flex; flex-direction: column;">
+                <div (click)="pushtoRemoveMembersList(dependent)" class="font btn" style="width: auto; font-size: xx-large; padding-bottom: 5px; text-align: center;" *ngFor="let dependent of account.plan.dependents">{{dependent.firstName}}&nbsp;{{dependent.lastName}}</div>
+              </div>
+            </div>
+          </div>
+          <div #removeFamilyDropdown style="flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; align-items: flex-end; min-height: 160px;">
+            <div *ngIf="removeMembersArray.length == 0" ></div>
+            <div *ngIf="removeMembersArray.length > 0" class="remove-family-row" style="padding: 0px 10px 10px 10px; display: flex; flex-direction: column;">
+              <div style="border: black solid 1px;">
+                <div>
+                  <div class="row remove-member-hover" (click)="removeFromRemoveMembersList(i)" *ngFor="let i of removeMembersArray" style="padding: 10px 0px 10px 0px; font-size: x-large; margin: 0; cursor: pointer;">
+                    <div class="col" style="padding: 0; text-align: center; display: flex; align-items: center; justify-content: center;">
+                      <span class="material-icons">
+                        close
+                      </span>
+                    </div>
+                    <div class="col" style="display: flex; justify-content: center; align-items: center; text-align: center; word-break: break-all;">{{i.firstName}}</div>
+                    <div class="col" style="display: flex; justify-content: center; align-items: center; text-align: center; word-break: break-all;">{{i.lastName}}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="remove-member-row" style="flex-direction: column; padding: 0px 10px 10px 10px">
+            <div style="flex: 1; display: flex; align-items: center; justify-content: flex-end; "><input class="btn btn-outline-primary font" type="button" value="Done" style="font-size: xx-large; width: 100%" (click)="removeFamilyMenu = false"/></div>
+          </div>
+        </form>
+      </div>
+  </div>
+
+  <!--Main View-->
+  <div id="desktop-container" *ngIf="!planChangeMenu">
+    <div class="info">
+      <h1 style="text-align: start; font-style: normal; font-weight: 300; padding: 0px;">Plan</h1>
+      <div class="attribute">
+        <h2>Monthly Premium</h2>
+        <h3>{{account.plan.monthlyPremium | currency}}</h3>
+      </div>
+      <div class="attribute">
+        <h2>Members enrolled</h2>
+        <h3>{{account.plan.dependents.length}}</h3>
+      </div>
+      <div *ngIf="account.plan.isMedical" class="attribute">
+        <h3>Medical visit copay</h3>
+        <h4>{{account.plan.medicalCopay | currency}}</h4>
+      </div>
+      <div *ngIf="account.plan.isDental" class="attribute">
+        <h3>Dental visit copay</h3>
+        <h4>{{account.plan.dentalCopay | currency}}</h4>
+      </div>
+      <div *ngIf="account.plan.isVision" class="attribute">
+        <h3>Vision visit copay</h3>
+        <h4>{{account.plan.visionCopay| currency}}</h4>
+      </div>
+    </div>
+    <div id="update-plan-button-container" style="justify-content: flex-end;">
+      <input type="button" class="btn btn btn-outline-primary font" id="update-plan-button"  value="Update Plan" (click)="toggleUpdatePlanMenu()"/>
+    </div>
+  </div>
+</div>

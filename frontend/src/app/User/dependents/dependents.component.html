@@ -1,1 +1,159 @@
-<p>dependents works!</p>
+<head>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<div id="dependent-container">
+
+  <!-- general desktop perspective -->
+  <div id="viewDesktop" class="container-fluid" style="padding: 0px;">
+    <div class="row font" style="padding-top: 20px; padding-bottom: 20px; background-color: white; border-bottom: 2px solid black; font-size: xx-large; margin: 0px;">
+      <div class="col" style="display: flex; justify-content: center; align-items: center; text-align: center;  word-break: break-all;">First Name</div>
+      <div class="col" style="display: flex; justify-content: center; align-items: center; text-align: center;  word-break: break-all;">Last Name</div>
+      <div class="col" style="display: flex; justify-content: center; align-items: center; text-align: center;  word-break: break-all;">Date of Birth</div>
+      <div class="col" style="display: flex; justify-content: center; align-items: center; text-align: center;  word-break: break-all;">Relationship</div>
+      <div class="col" style="display: flex; justify-content: center; align-items: center; text-align: center;  word-break: break-all;">Email</div>
+      <div class="col" style="display: flex; justify-content: center; align-items: center; text-align: center;  word-break: break-all;">Phone</div>
+    </div>
+    <div *ngFor="let dependent of dependents"[ngSwitch]="dependent.authentication">
+      <div *ngSwitchCase='1' class="desktopUpdateButtonHover" (click)="updateDependentMenu(dependent)">
+        <div id="updateDependentDesktopButton" class="row font" style="margin: 0; color: black;">
+            <div class="col" style="display: flex; justify-content: center; align-items: center; text-align: center; word-break: break-all; ">{{dependent.firstName}}</div>
+            <div class="col" style="display: flex; justify-content: center; align-items: center; text-align: center; word-break: break-all;">{{dependent.lastName}}</div>
+            <div class="col" style="display: flex; justify-content: center; align-items: center; text-align: center; word-break: break-all;">{{dependent.dob}}</div>
+            <div class="col" style="display: flex; justify-content: center; align-items: center; text-align: center; word-break: break-all;">{{dependent.relationship}}</div>
+            <div class="col" style="display: flex; justify-content: center; align-items: center; text-align: center; word-break: break-all;">{{dependent.email}}</div>
+            <div class="col" style="display: flex; justify-content: center; align-items: center; text-align: center; word-break: break-all;">{{dependent.phoneNumber | mask: '(000) 000-0000'}}</div>
+        </div>
+      </div>
+      <div *ngSwitchCase='2' style="background-image : linear-gradient(to bottom right, grey, white) ; color : white">
+        <div class="font row" style="margin: 0; padding: 1rem; font-size: x-large;">Pending Approval</div>
+        <div id="updateDependentDesktopButton" class="row font" style="margin: 0; color: black;">
+            <div class="col" style="display: flex; justify-content: center; align-items: center; text-align: center; word-break: break-all; ">{{dependent.firstName}}</div>
+            <div class="col" style="display: flex; justify-content: center; align-items: center; text-align: center; word-break: break-all;">{{dependent.lastName}}</div>
+            <div class="col" style="display: flex; justify-content: center; align-items: center; text-align: center; word-break: break-all;">{{dependent.dob}}</div>
+            <div class="col" style="display: flex; justify-content: center; align-items: center; text-align: center; word-break: break-all;">{{dependent.relationship}}</div>
+            <div class="col" style="display: flex; justify-content: center; align-items: center; text-align: center; word-break: break-all;">{{dependent.email}}</div>
+            <div class="col" style="display: flex; justify-content: center; align-items: center; text-align: center; word-break: break-all;">{{dependent.phoneNumber | mask: '(000) 000-0000'}}</div>
+        </div>
+      </div>
+      <div *ngSwitchCase='3' class="desktopUpdateButtonHover" style="background-image : linear-gradient(to bottom right, red, white) ; color : white" (click)="updateDependentMenu(dependent)">
+        <div class="font row" style="margin: 0; padding: 1rem; font-size: x-large;">Denied</div>
+        <div id="updateDependentDesktopButton" class="row font" style="margin: 0; color: black;">
+            <div class="col" style="display: flex; justify-content: center; align-items: center; text-align: center; word-break: break-all; ">{{dependent.firstName}}</div>
+            <div class="col" style="display: flex; justify-content: center; align-items: center; text-align: center; word-break: break-all;">{{dependent.lastName}}</div>
+            <div class="col" style="display: flex; justify-content: center; align-items: center; text-align: center; word-break: break-all;">{{dependent.dob}}</div>
+            <div class="col" style="display: flex; justify-content: center; align-items: center; text-align: center; word-break: break-all;">{{dependent.relationship}}</div>
+            <div class="col" style="display: flex; justify-content: center; align-items: center; text-align: center; word-break: break-all;">{{dependent.email}}</div>
+            <div class="col" style="display: flex; justify-content: center; align-items: center; text-align: center; word-break: break-all;">{{dependent.phoneNumber | mask: '(000) 000-0000'}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- if update dependent is selected from desktop perspective  -->
+  <div *ngIf="updateDependent" id="updateDependentDesktop">
+    <!-- check whether they are eligable for coverage or whether they have been denied  -->
+    <form [formGroup]="updateDependentRef" (ngSubmit)="updateDependentFunc()" *ngIf="updateDependent.authentication == 1" style="row-gap: 5px;">
+      <h1 class="form-row font" style="margin: 16px 0px 16px 0px; font-weight: 300; text-align: start; justify-content: flex-start; padding: 10px; font-size: 4rem; line-height: 4rem;">Update Family Member</h1>
+      <div *ngIf="error" class="form-row font" style="justify-content: center; align-items: center; color: red; padding: 10px;">
+        <div style="font-size: x-large;">All fields must be filled!</div>
+      </div>
+      <div class="form-row font" style="padding: 0px 10px 0px 10px;">
+        <input type="email" formControlName="email" placeholder="Email"/>
+      </div>
+      <div class="form-row font" style="padding: 0px 10px 0px 10px;" >
+        <input type="text" formControlName="firstName" placeholder="First Name"/>
+      </div>
+      <div class="form-row font" style="padding: 0px 10px 0px 10px;" >
+        <input type="text" formControlName="lastName" placeholder="Last Name"/>
+      </div>
+      <div class="form-row font" style="padding: 0px 10px 0px 10px;" >
+        <input style="flex: 2;"  type="text" mask="(000) 000-0000" formControlName="phoneNumber" placeholder="Phone"/>
+      </div>
+      <div class="form-row" style="display: flex; flex-direction: column; row-gap: 5px;" >
+        <div style="flex: 1; display: flex;"><input class="btn btn-outline-primary font"  type="submit" value="Save" style="font-size: xx-large; width: fit-content;"/></div>
+        <div style="flex: 1; display: flex;"><input class="btn btn-outline-secondary font" type="reset" value="Clear" style="font-size: xx-large; width: fit-content;"(click)="clearForm()"/></div>
+        <div style="flex: 1; display: flex;"><input class="btn btn-outline-danger font" value="Cancel" type="button" style="font-size: xx-large; width: fit-content;" (click)="cancelUpdateDependent()"/></div>
+      </div>
+    </form>
+
+    <form [formGroup]="updateDependentRef" (ngSubmit)="updateDependentFunc()" *ngIf="updateDependent.authentication == 3">
+      <h1 class="form-row font" style="margin: 16px 0px 16px 0px; font-weight: 300; text-align: start; justify-content: center; padding: 10px; font-size: 4rem; line-height: 4rem; text-align: center;">Requested family member has been denied coverage</h1>
+      <h4 class="form-row font" style="font-size: x-large; justify-content: center;">Call us at 1 (800)-COV-ERME</h4>
+      <div class="form-row" style="display: flex; flex-direction: column; row-gap: 5px;" >
+        <div style="flex: 1; display: flex;"><input class="btn btn-outline-danger font" value="I understand" type="button" style="font-size: xx-large; width: fit-content;" (click)="cancelUpdateDependent()"/></div>
+      </div>
+    </form>
+  </div>
+
+  <!-- general mobile perspective -->
+  <div *ngIf="!addDependent && !updateDependent" id="viewMobile">
+    <div id="updateDependentMobileButton" [ngSwitch]="dependent.authentication" *ngFor="let dependent of dependents;  let i = index">
+      <div *ngSwitchCase='1' style="padding-top: 15px; padding-bottom: 15px; padding-left: 10px; padding-right: 10px;" (click)="updateDependentMenu(dependent)">
+        <div class="font" style="display: flex; justify-content: space-between; width: 100%; font-size: x-large; padding-bottom: 10px;"><div>First Name</div><div style="max-width: 70%; overflow-wrap: break-word;">{{dependent.firstName}}</div></div>
+        <div class="font" style="display: flex; justify-content: space-between; width: 100%; font-size: x-large; padding-bottom: 10px;"><div>Last Name</div><div style="max-width: 70%; overflow-wrap: break-word;">{{dependent.lastName}}</div></div>
+        <div class="font" style="display: flex; justify-content: space-between; width: 100%; font-size: x-large; padding-bottom: 10px;"><div>Date of Birth</div><div style="max-width: 60%; overflow-wrap: break-word;">{{dependent.dob}}</div></div>
+        <div class="font" style="display: flex; justify-content: space-between; width: 100%; font-size: x-large; padding-bottom: 10px;"><div>Relationship</div><div style="max-width: 60%; overflow-wrap: break-word;">{{dependent.relationship}}</div></div>
+        <div class="font" style="display: flex; justify-content: space-between; width: 100%; font-size: x-large; padding-bottom: 10px;"><div>Email</div><div style="max-width: 70%; overflow-wrap: break-word;">{{dependent.email}}</div></div>
+        <div class="font" style="display: flex; justify-content: space-between; width: 100%; font-size: x-large;"><div>Phone</div><div>{{dependent.phoneNumber | mask: '(000) 000-0000'}}</div></div>
+      </div>
+      <div *ngSwitchCase='2' style="background-image : linear-gradient(to bottom right, grey, white) ;  padding-top: 15px; padding-bottom: 15px; padding-left: 10px; padding-right: 10px;">
+        <div class="font row" style="margin: 0; padding-bottom: 2rem; font-size: x-large; color: white;">Pending Approval</div>
+        <div class="font" style="display: flex; justify-content: space-between; width: 100%; font-size: x-large; padding-bottom: 10px;"><div>First Name</div><div style="max-width: 70%; overflow-wrap: break-word;">{{dependent.firstName}}</div></div>
+        <div class="font" style="display: flex; justify-content: space-between; width: 100%; font-size: x-large; padding-bottom: 10px;"><div>Last Name</div><div style="max-width: 70%; overflow-wrap: break-word;">{{dependent.lastName}}</div></div>
+        <div class="font" style="display: flex; justify-content: space-between; width: 100%; font-size: x-large; padding-bottom: 10px;"><div>Date of Birth</div><div style="max-width: 60%; overflow-wrap: break-word;">{{dependent.dob}}</div></div>
+        <div class="font" style="display: flex; justify-content: space-between; width: 100%; font-size: x-large; padding-bottom: 10px;"><div>Relationship</div><div style="max-width: 60%; overflow-wrap: break-word;">{{dependent.relationship}}</div></div>
+        <div class="font" style="display: flex; justify-content: space-between; width: 100%; font-size: x-large; padding-bottom: 10px;"><div>Email</div><div style="max-width: 70%; overflow-wrap: break-word;">{{dependent.email}}</div></div>
+        <div class="font" style="display: flex; justify-content: space-between; width: 100%; font-size: x-large;"><div>Phone</div><div>{{dependent.phoneNumber | mask: '(000) 000-0000'}}</div></div>
+      </div>
+      <div *ngSwitchCase='3' style="background-image : linear-gradient(to bottom right, red, white) ; padding-top: 15px; padding-bottom: 15px; padding-left: 10px; padding-right: 10px;" (click)="updateDependentMenu(dependent)">
+        <div class="font row" style="margin: 0; padding-bottom: 2rem; font-size: x-large; color: white;">Denied</div>
+        <div class="font" style="display: flex; justify-content: space-between; width: 100%; font-size: x-large; padding-bottom: 10px;"><div>First Name</div><div style="max-width: 70%; overflow-wrap: break-word;">{{dependent.firstName}}</div></div>
+        <div class="font" style="display: flex; justify-content: space-between; width: 100%; font-size: x-large; padding-bottom: 10px;"><div>Last Name</div><div style="max-width: 70%; overflow-wrap: break-word;">{{dependent.lastName}}</div></div>
+        <div class="font" style="display: flex; justify-content: space-between; width: 100%; font-size: x-large; padding-bottom: 10px;"><div>Date of Birth</div><div style="max-width: 60%; overflow-wrap: break-word;">{{dependent.dob}}</div></div>
+        <div class="font" style="display: flex; justify-content: space-between; width: 100%; font-size: x-large; padding-bottom: 10px;"><div>Relationship</div><div style="max-width: 60%; overflow-wrap: break-word;">{{dependent.relationship}}</div></div>
+        <div class="font" style="display: flex; justify-content: space-between; width: 100%; font-size: x-large; padding-bottom: 10px;"><div>Email</div><div style="max-width: 70%; overflow-wrap: break-word;">{{dependent.email}}</div></div>
+        <div class="font" style="display: flex; justify-content: space-between; width: 100%; font-size: x-large;"><div>Phone</div><div>{{dependent.phoneNumber | mask: '(000) 000-0000'}}</div></div>
+      </div>
+    </div>
+  </div>
+  <!-- update family member clicked from mobile perspective  -->
+    <!-- Check whether family member is eligable for coverage or whether they have been denied -->
+    <form *ngIf="updateDependent && updateDependent.authentication == 1" id="updateDependentMobile" [formGroup]="updateDependentRef" (ngSubmit)="updateDependentFunc()">
+      <h1 class="form-row font" style="margin: 16px 0px 16px 0px; font-weight: 300; text-align: start; justify-content: flex-start; padding: 10px; font-size: 4rem; line-height: 4rem;">Update Family Member</h1>
+      <div *ngIf="error" class="form-row font" style="justify-content: center; align-items: center; color: red; padding: 10px;">
+        <div style="font-size: x-large;">All fields must be filled!</div>
+      </div>
+      <div class="form-row font" style="padding: 0px 10px 0px 10px;">
+        <input type="email" formControlName="email" placeholder="Email"/>
+      </div>
+      <div class="form-row font" style="padding: 0px 10px 0px 10px;" >
+        <input type="text" formControlName="firstName" placeholder="First Name"/>
+      </div>
+      <div class="form-row font" style="padding: 0px 10px 0px 10px;" >
+        <input type="text" formControlName="lastName" placeholder="Last Name"/>
+      </div>
+      <div class="form-row font" style="padding: 0px 10px 0px 10px;">
+        <input style="flex: 2;"  mask="(000) 000-0000"  type="text" formControlName="phoneNumber" placeholder="Phone"/>
+      </div>
+      <div class="form-row" style="display: flex; flex-grow: 1; justify-content: flex-end; flex-direction: column;">
+        <div style="display: flex; flex-direction: column; row-gap: 5px;">
+          <div style="background-color: white; flex: 1; border-radius: 5px; display: flex; align-items: center; justify-content: flex-end;"><input class="btn btn-outline-primary font"  type="submit" value="Save" style="font-size: xx-large; width: fit-content;"/></div>
+          <div style="background-color: white; flex: 1; border-radius: 5px; display: flex; align-items: center; justify-content: flex-end;"><input class="btn btn-outline-secondary font" type="reset" value="Clear" style="font-size: xx-large; width: fit-content;"(click)="clearForm()"/></div>
+          <div style="background-color: white; flex: 1; border-radius: 5px; display: flex; align-items: center; justify-content: flex-end; "><input class="btn btn-outline-danger font" type="button" value="Cancel" style="font-size: xx-large; width: fit-content;" (click)="cancelUpdateDependent()"/></div>
+        </div>
+      </div>
+    </form>
+
+    <form *ngIf="updateDependent && updateDependent.authentication == 3" id="updateDependentMobile" [formGroup]="updateDependentRef" (ngSubmit)="updateDependentFunc()">
+      <h1 class="form-row font" style="margin: 16px 0px 16px 0px; font-weight: 300; text-align: start; justify-content: flex-start; padding: 10px; font-size: 4rem; line-height: 4rem; text-align: center;">Requested family member has been denied coverage</h1>
+      <div style="display: flex; flex-grow: 1; flex-direction: column; justify-content: space-between;">
+        <h4 class="form-row font" style="font-size: x-large; justify-content: center; text-align: center;">Call us at 1 (800)-COV-ERME</h4>
+        <div class="form-row" style="display: flex; flex-direction: column; row-gap: 5px;" >
+          <div style="flex: 1; display: flex;"><input class="btn btn-outline-danger font" value="I understand" type="button" style="font-size: xx-large; width: fit-content;" (click)="cancelUpdateDependent()"/></div>
+        </div>
+      </div>
+    </form>
+
+
+</div>
+

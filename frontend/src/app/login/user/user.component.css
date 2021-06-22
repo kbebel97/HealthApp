@@ -7,10 +7,10 @@ form{
 }
 
 .font{
-  font-family: 'Oswald', sans-serif; font-weight: 300;
+  font-family: 'Oswald', sans-serif; font-weight: 300; font-size: xx-large;
 }
 
 input{
-  font-size: 2em; border-radius: 5px; width: 100%;
+  font-size: xx-large; width: 100%; border: 1px solid;
 }
 

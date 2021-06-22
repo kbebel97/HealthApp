@@ -31,6 +31,18 @@ import { MatInputModule } from '@angular/material/input';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { MatSelectModule } from '@angular/material/select';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { NgxMaskModule, IConfig } from 'ngx-mask';
+import { PlanComponent } from './user/plan/plan.component'
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { HttpClientModule } from '@angular/common/http';
+import { CreateProfileComponent } from './User/application/create-profile/create-profile.component';
+import { SelectPlanComponent } from './User/application/select-plan/select-plan.component';
+import { AddDependentsComponent } from './User/application/add-dependents/add-dependents.component';
+import { CreateAccountComponent } from './User/application/create-account/create-account.component';
+
+const maskConfig: Partial<IConfig> = {
+  validation: false,
+};
 
 
 @NgModule({
@@ -49,7 +61,12 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
     EmployeeNav,
     AdminNav,
     UserNav,
-    DependentsComponent
+    DependentsComponent,
+    PlanComponent,
+    CreateProfileComponent,
+    SelectPlanComponent,
+    AddDependentsComponent,
+    CreateAccountComponent
   ],
   imports: [
     BrowserModule,
@@ -62,9 +79,12 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
     MatFormFieldModule,
     MatInputModule,
     MatNativeDateModule,
+    NgxMaskModule.forRoot(maskConfig),
     BsDatepickerModule.forRoot(),
     MatSelectModule,
-    InfiniteScrollModule
+    InfiniteScrollModule,
+    MatCheckboxModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -10,12 +10,40 @@
   display: flex; justify-content: flex-end; flex: 1; align-items: center;
 }
 
-@media only screen and (max-width: 600px) {
-#links{
+a:hover{
+  text-decoration: underline;
+}
+
+#nav-row{
+  display: flex; flex-direction: row; height: 77px; padding: 0px 10px 0px 10px; width: 100%; background-color: white;
+}
+
+#dropdown-button{
   display: none;
 }
 
-#logout{
+#dropdown{
   display: none;
 }
+
+
+@media only screen and (max-width: 1050px) {
+  #links{
+    display: none;
+  }
+
+  #dropdown{
+    display: flex; flex-direction: column; justify-content: center; align-items: center; width: 100%;
+  }
+
+  #logout{
+    display: none;
+  }
+  #dropdown-button{
+    display: flex; justify-content: center; align-items: center;
+  }
+
+  #nav-row{
+    justify-content: space-between;
+  }
 }

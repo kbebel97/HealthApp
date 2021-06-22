@@ -20,6 +20,12 @@ import { ProfileComponent as UserProfile} from './User/profile/profile.component
 import { ApplicationComponent } from './user/application/application.component';
 import { DependentsComponent } from './user/dependents/dependents.component';
 
+import { PlanComponent } from './user/plan/plan.component';
+import { CreateProfileComponent } from './User/application/create-profile/create-profile.component';
+import { AddDependentsComponent } from './User/application/add-dependents/add-dependents.component';
+import { SelectPlanComponent } from './User/application/select-plan/select-plan.component';
+import { CreateAccountComponent } from './User/application/create-account/create-account.component';
+
 
 const routes: Routes = [
   {path: '', redirectTo: '/user_login', pathMatch: 'full'},
@@ -35,10 +41,16 @@ const routes: Routes = [
     {path: 'profile', component: AdminProfile}
   ]},
   {path: 'user_nav', component: UserNav, children: [
-    {path: 'dependents', component: DependentsComponent},
-    {path: 'profile', component: UserProfile}
+    {path: 'dependents', component: DependentsComponent, data: { animation: 2}},
+    {path: 'profile', component: UserProfile , data: { animation: 'HomePage'}},
+    {path: 'plan', component: PlanComponent , data: { animation: 'AboutPage'}}
   ]},
-  {path: 'apply', component: ApplicationComponent}
+  {path: 'apply', component: ApplicationComponent, children: [
+    {path: 'create_account', component: CreateAccountComponent},
+    {path: 'create_profile', component: CreateProfileComponent},
+    {path: 'add_dependents', component: AddDependentsComponent},
+    {path: 'select_plan', component: SelectPlanComponent},
+  ]}
 ];
 
 @NgModule({

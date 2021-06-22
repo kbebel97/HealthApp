@@ -1,0 +1,75 @@
+<head>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<div class="plan-container">
+  <form action="addDependents()">
+    <div>
+      <h1>Choose your coverage and pick a tier:</h1>
+      <div *ngIf="error" style="color: red; font-size: x-large; vertical-align: middle; padding: 10px;"><div *ngFor="let error of errors" style="line-height: normal;">{{error}}</div></div>
+      <h3 style="padding: 10px">
+        <ul class="tier-list-description">
+          <li>Tier 1 - Provides basic coverage. Physicians are chosen for you.</li>
+          <li>Tier 2 - Eligable to choose your physican. Certain pyhsicians are restricted.</li>
+          <li>Tier 3 - Eligable to choose any doctor within our network.</li>
+        </ul>
+      </h3>
+      <div style="padding: 0px 10px 0px 10px">
+        <div id="checkbox-container">
+          <div class="checkbox-row">
+            <div class="cb">
+              <mat-checkbox [checked]='isMedical' (change)="isMedical = !isMedical">Medical</mat-checkbox>
+            </div>
+            <div *ngIf="isMedical" class="dropdown-container">
+              <div #medical class="medical btn dropdown" [ngStyle]="{'color': !true ? 'grey' : 'black'}" type="text">
+                <div class="medical dropdown-text">{{medicalTier}}</div>
+                <div class="medical dropdown-arrow"><span class="medical material-icons">arrow_drop_down</span></div>
+              </div>
+              <div>
+                <div *ngIf="displayMedicalTiers" class="dropdown-tier-container" #medicalTiers>
+                  <div (click)="medicalTierSelection(tier)" class="btn dropdown-tier" *ngFor="let tier of Tiers">{{tier}}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="checkbox-row">
+            <div class="cb">
+              <mat-checkbox [checked]='isDental' (change)="isDental = !isDental">Dental</mat-checkbox>
+            </div>
+            <div *ngIf="isDental" class="dropdown-container" >
+              <div #dental class="dental btn dropdown" [ngStyle]="{'color': !true ? 'grey' : 'black'}" type="text">
+                <div class="dental dropdown-text">{{dentalTier}}</div>
+                <div class="dental dropdown-arrow"><span class="dental material-icons">arrow_drop_down</span></div>
+              </div>
+              <div>
+                <div *ngIf="displayDentalTiers" class="dropdown-tier-container" #dentalTiers>
+                  <div (click)="dentalTierSelection(tier)" class="btn dropdown-tier" *ngFor="let tier of Tiers">{{tier}}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="checkbox-row">
+            <div class="cb">
+              <mat-checkbox [checked]='isVision' (change)="isVision = !isVision" >Vision</mat-checkbox>
+            </div>
+            <div *ngIf="isVision" class="dropdown-container">
+              <div #vision class="vision btn dropdown" [ngStyle]="{'color': !true ? 'grey' : 'black'}" type="text">
+                <div class="vision dropdown-text">{{visionTier}}</div>
+                <div class="vision dropdown-arrow"><span class="vision material-icons">arrow_drop_down</span></div>
+              </div>
+              <div>
+                <div *ngIf="displayVisionTiers" class="dropdown-tier-container" #visionTiers>
+                  <div (click)="visionTierSelection(tier)" class="btn dropdown-tier" *ngFor="let tier of Tiers">{{tier}}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="button-container">
+      <input class="btn btn-outline-primary font" style="font-size: xx-large; width: 100%;" type="button" (click)="returntoCreateProfile()" value="Back"/>
+      <input class="btn btn-outline-secondary font" style="font-size: xx-large; width: 100%;" type="reset" value="Clear" (click)="clearForm()"/>
+      <input class="btn btn-outline-primary font" style="font-size: xx-large; width: 100%;" type="submit" (click)="addDependents()" value="Next"/>
+    </div>
+  </form>
+</div>

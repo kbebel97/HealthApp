@@ -1,17 +1,17 @@
 input{
-  border-radius: 5px; width: 100%; font-size: xx-large; flex: 2;
+  border: 1px solid; width: 100%; font-size: xx-large;
 }
 
-.form-label-container{
-  width: 200px; font-size: xx-large; margin: 0; display: flex; align-items: center;
-}
-
-.font{
-  font-family: 'Oswald', sans-serif; font-weight: 300;
+h1{
+  display: flex; flex-direction: row; width: 100%; margin: 16px 0px 16px 0px; font-weight: 300; text-align: start; justify-content: flex-start; padding: 10px; font-size: 4rem;
 }
 
 form{
-  display: flex; flex-direction: column; justify-content: space-evenly; border: black 3px solid; border-radius: 5px; width: 60%;
+  display: flex; flex-direction: column; border: black 2px solid; width: 700px; box-shadow: 10px 10px 5px grey; background-color: white; row-gap: 10px; margin: auto; position: relative;
+}
+
+*:not(span){
+  font-family: 'Oswald', sans-serif; font-weight: 300;
 }
 
 #selectCountry:hover{
@@ -27,35 +27,45 @@ form{
   flex-direction: row;
   width: 100%;
   margin: 0px;
-  padding: 7px;
-}
-
-.form-row input{
-  flex: 1;
+  padding: 0px 10px 0px 10px;
 }
 
 #form-container{
-  display: flex; justify-content: center; align-items: flex-start; padding: 2rem;
+  display: flex; justify-content: center; align-items: center; height: calc(100% - 80px);
 }
 
-@media only screen and (max-width: 860px) {
+#button-container{
+  row-gap: 5px;  column-gap: 5px; display: flex; flex-direction: row; padding: 10px 0px 10px 0px;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active
+{
+ -webkit-box-shadow: 0 0 0 30px white inset !important;
+}
+
+@media only screen and (max-width: 1050px) {
   .form-row{
     flex-direction: column;
-    width: 100%;
     row-gap: 10px;
-    padding-top: 10px;
-    padding-bottom: 10px;
   }
+
+  #button-container{
+    flex-direction: column;
+  }
+
   form{
+    height: 100%;
     width: 100%;
     max-width: 100%;
-    margin: 0;
     padding: 0;
     border: 0;
     border-radius: 0;
-  }
-  #form-container{
-    padding: 0;
+    background-color: transparent;
+    background-attachment: fixed;
+    box-shadow: none;
   }
 
 }

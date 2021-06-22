@@ -27,4 +27,8 @@ export class UserComponent implements OnInit {
 
   }
 
+  signup(){
+    this.router.navigate(['/apply'])
+  }
+
 }

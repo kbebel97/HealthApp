@@ -1,0 +1,78 @@
+<head>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<div id="form-container">
+  <form [formGroup]="profileRef" (ngSubmit)="createProfile()" style="position: relative;">
+    <h1>Create Profile</h1>
+    <div *ngIf="error" style="position: absolute; color: red; font-size: x-large; vertical-align: middle; padding: 10px; top: 74px;">{{error_text}}</div>
+    <h2>Profile</h2>
+    <div class="form-row" >
+      <input type="text" formControlName="firstName" placeholder="First Name"/>
+    </div>
+    <div class="form-row" >
+      <input type="text" formControlName="lastName" placeholder="Last Name"/>
+    </div>
+    <div class="form-row">
+      <input type="text" formControlName="phoneNumber" placeholder="Phone Number" mask='(000) 000-0000' style="height: 100%;"/>
+    </div>
+    <div class="form-row" [ngStyle]="{'height': dateValidation ? 'auto' : 'fit-content'}">
+      <div style="display: flex; flex-direction: column; row-gap: 8px; width: 100%;">
+        <div *ngIf="!dateValidation" style="font-size: large; text-align: start; color: red;">Invalid Date or Format!</div>
+        <input type="text" formControlName="dob" placeholder="DOB - MM/DD/YYYY" (input)="validateDate($event)" style="height: 100%;"/>
+      </div>
+    </div>
+    <div class="form-row">
+      <input type="text" formControlName="occupation" placeholder="Occupation" style="height: 100%;"/>
+    </div>
+    <div class="form-row"  >
+      <div style="width: 100%; position: relative;">
+        <div #divMarital class="marital font btn" style="height: 100%; border: 1px solid black; padding: 0px; padding-top: 1px; text-align: start; display: flex; justify-content: space-between; background-color: white; height: 100%;" [ngStyle]="{'color': maritalStatus=='Marital Status' ? 'grey' : 'black'}" type="text">
+          <div class="marital" style="font-size: xx-large; padding-left: 2px;">{{maritalStatus}}</div>
+          <div class="marital" style="display: flex; justify-content: center; align-items: center;"><span class="marital material-icons">arrow_drop_down</span></div>
+        </div>
+        <div *ngIf="displayMaritalStatuses" #divMaritalList style="position: absolute; background-color: white; height: fit-content; overflow-x:hidden; border: black 1px solid; display: flex; flex-direction: column; z-index: 2" >
+          <div id="selectMaritalStatus" (click)="maritalSelect(maritalStatus)" class="font btn" style="width: auto; font-size: xx-large; padding-bottom: 5px; text-align: start;" *ngFor="let maritalStatus of maritalStatuses">{{maritalStatus}}</div>
+        </div>
+      </div>
+    </div>
+    <h2>Address</h2>
+    <div class="form-row" style="display: flex; justify-content: space-between; flex-grow: 1; flex-direction: column;"  >
+      <div style="flex: 2; display: flex; flex-direction: column; row-gap: 10px;">
+        <div style="width: 100%; position: relative;">
+          <div #divCountry class="country btn" style="flex: 2; font-size: x-large; border: 1px solid black; padding: 0; text-align: start; display: flex; justify-content: space-between; height: 40px; background-color: white;" [ngStyle]="{'color': country=='Country' ? 'grey' : 'black'}" type="text">
+            <div class="country" style="padding-top: 1px; padding-bottom: 1px; padding-left: 2px; font-size: x-large;">{{country}}</div>
+            <div class="country" style="display: flex; justify-content: center; align-items: center;"><span class="country material-icons">arrow_drop_down</span></div>
+          </div>
+          <div (scroll)="onScroll($event)" *ngIf="displayCountries" #divCountryList style="z-index: 2; position: absolute; background-color: white; height: 150px; overflow-y: auto; overflow-x:hidden; border: black 1px solid; display: flex; flex-direction: column;">
+            <div id="selectCountry" (click)="countrySelect(country)" class="font btn" style="width: auto; font-size: x-large; padding-top: 5px; padding-bottom: 5px; text-align: start;" *ngFor="let country of countryList1">{{country}}</div>
+          </div>
+        </div>
+        <div style="display: flex; flex-direction: column; row-gap: 8px;">
+          <input style="font-size: x-large;" type="text" formControlName="street" placeholder="Street"/>
+        </div>
+        <div style="display: flex; flex-direction: row; column-gap: 5px;">
+          <div style="display: flex; flex-direction: column; row-gap: 8px; flex: 1;">
+            <input style="font-size: x-large;" type="text" formControlName="zip" placeholder="Zip"/>
+          </div>
+          <div style="display: flex; flex-direction: column; row-gap: 8px; flex: 1">
+            <input style="font-size: x-large;" type="text" formControlName="city" placeholder="City"/>
+          </div>
+          <div *ngIf="isUSA()" style="position: relative; flex: 1">
+            <div #divState class="state btn" style="flex: 2; font-size: x-large; border: 1px solid black; padding: 0; text-align: start; display: flex; justify-content: space-between; height: 40px; background-color: white;" [ngStyle]="{'color': country=='Country' ? 'grey' : 'black'}" type="text">
+              <div class="state" style="padding-top: 1px; padding-bottom: 1px; padding-left: 2px; font-size: x-large;" [ngStyle]="{'color': state=='State' ? 'grey' : 'black'}">{{state}}</div>
+              <div class="state"style="display: flex; justify-content: center; align-items: center;"><span class="state material-icons">arrow_drop_down</span></div>
+            </div>
+            <div *ngIf="displayStates" #divStateList style="z-index: 2; position: absolute; background-color: white; height: 120px; overflow-y: auto; overflow-x:hidden; border: black 1px solid; display: flex; flex-direction: column;">
+              <div id="selectState" (click)="stateSelect(state)" class="btn" style="width: auto; font-size: x-large; padding: 5px; text-align: start;" *ngFor="let state of stateList">{{state}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="button-container">
+        <input class="btn btn-outline-primary" style="font-size: xx-large;" value="Back" type="button" (click)="returntoCreateAccount()"/>
+        <input class="btn btn-outline-secondary" style="font-size: xx-large;" type="reset" value="Clear" (click)="clearForm()"/>
+        <input class="btn btn-outline-primary" style="font-size: xx-large;" type="submit" value="Next"/>
+      </div>
+    </div>
+  </form>
+</div>
